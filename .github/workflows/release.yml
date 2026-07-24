@@ -12,6 +12,12 @@ on:
 permissions:
   contents: write
 
+env:
+  # REQUIRED under a compile wrapper (soldr/zccache).
+  CARGO_INCREMENTAL: "0"
+  # Persistent per-runner zccache compile store (replaces the old sccache dir).
+  SOLDR_CACHE_DIR: ${{ github.workspace }}/../.soldr-cache
+
 jobs:
   release-meta:
     runs-on: [self-hosted, unraid]
@@ -66,8 +72,8 @@ jobs:
         with:
           ref: ${{ needs.release-meta.outputs.tag_name }}
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install Rust + soldr
+        uses: ./.github/actions/setup-rust-soldr
         with:
           targets: ${{ matrix.target }}
 
@@ -88,10 +94,6 @@ jobs:
             pnpm install --frozen-lockfile
             pnpm build
           fi
-
-      - uses: Swatinem/rust-cache@v2
-        with:
-          key: ${{ matrix.target }}
 
       - name: Build (linux)
         if: matrix.target == 'x86_64-unknown-linux-gnu'
