@@ -72,6 +72,31 @@
           "type": "json",
           "path": "packages/tailscale-rmcp/package.json",
           "jsonpath": "$.binaryVersion"
+        },
+        {
+          "type": "json",
+          "path": "server.json",
+          "jsonpath": "$.version"
+        },
+        {
+          "type": "json",
+          "path": "server.json",
+          "jsonpath": "$.packages[?(@.identifier == 'tailscale-rmcp')].version"
+        },
+        {
+          "type": "json",
+          "path": "server.json",
+          "jsonpath": "$['_meta']['io.modelcontextprotocol.registry/publisher-provided'].distribution.npm"
+        },
+        {
+          "type": "json",
+          "path": "server.json",
+          "jsonpath": "$['_meta']['io.modelcontextprotocol.registry/publisher-provided'].buildInfo.version"
+        },
+        {
+          "type": "json",
+          "path": "server.json",
+          "jsonpath": "$.packages[?(@.identifier == 'tailscale-rmcp')].environmentVariables[?(@.name == 'TAILSCALE_RMCP_VERSION')].placeholder"
         }
       ]
     }
