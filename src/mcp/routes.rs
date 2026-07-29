@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
 use axum::{
+    Router,
     http::{HeaderValue, Method, StatusCode},
     response::{IntoResponse, Json},
     routing::get,
-    Router,
 };
 use serde_json::json;
 use tower_http::{
@@ -13,7 +13,7 @@ use tower_http::{
 };
 
 use super::rmcp_server::{allowed_origins, streamable_http_config, streamable_http_service};
-use super::{build_auth_layer, AppState, AuthPolicy};
+use super::{AppState, AuthPolicy, build_auth_layer};
 
 const MCP_BODY_LIMIT_BYTES: usize = 65_536;
 

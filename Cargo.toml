@@ -2,14 +2,22 @@
 members = [".", "xtask"]
 resolver = "2"
 
+[workspace.package]
+
+# Fleet edition (ADR-0002). Members inherit via edition.workspace = true.
+edition = "2024"
+# Fleet MSRV — the floor this repo supports. A separate promise from
+# rust-toolchain.toml's channel, which is what we BUILD with. Both are
+# 1.97.1 as of 2026-07-29 (ADR-0001 toolchain, ADR-0024 MSRV).
+rust-version = "1.97.1"
 [workspace.lints.clippy]
 mod_module_files = "deny"
 
 [package]
 name = "tailscale-rmcp"
 version = "0.1.4"
-edition = "2024"
-rust-version = "1.92"
+edition.workspace = true
+rust-version.workspace = true
 categories = ["command-line-utilities", "development-tools"]
 keywords = ["mcp", "tailscale", "tailnet", "networking", "rmcp"]
 repository = "https://github.com/jmagar/rtailscale"

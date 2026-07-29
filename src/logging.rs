@@ -16,10 +16,10 @@ use std::{
 
 use tracing::Level;
 use tracing_subscriber::{
-    fmt::{self, time::ChronoUtc, FormatFields, MakeWriter},
+    EnvFilter,
+    fmt::{self, FormatFields, MakeWriter, time::ChronoUtc},
     layer::SubscriberExt,
     util::SubscriberInitExt,
-    EnvFilter,
 };
 
 const MAX_LOG_BYTES: u64 = 10 * 1024 * 1024; // 10 MB

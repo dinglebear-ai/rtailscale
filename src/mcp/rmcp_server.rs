@@ -2,6 +2,7 @@ use std::{borrow::Cow, net::Ipv6Addr, sync::Arc, time::Instant};
 
 use lab_auth::AuthContext;
 use rmcp::{
+    ErrorData, RoleServer, ServerHandler,
     model::{
         CallToolRequestParams, CallToolResponse, CallToolResult, ContentBlock,
         GetPromptRequestParams, GetPromptResponse, Implementation, ListPromptsResult,
@@ -11,16 +12,15 @@ use rmcp::{
     },
     service::RequestContext,
     transport::streamable_http_server::{
-        session::local::LocalSessionManager, StreamableHttpServerConfig, StreamableHttpService,
+        StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
     },
-    ErrorData, RoleServer, ServerHandler,
 };
-use serde_json::{json, Map, Value};
+use serde_json::{Map, Value, json};
 
 use crate::{config::McpConfig, tailscale::TailscaleApiError};
 
 use super::{
-    metadata, prompts, schemas::tool_definitions, tools::execute_tool, AppState, AuthPolicy,
+    AppState, AuthPolicy, metadata, prompts, schemas::tool_definitions, tools::execute_tool,
 };
 
 const READ_SCOPE: &str = "tailscale:read";
@@ -151,12 +151,11 @@ impl ServerHandler for TailscaleRmcpServer {
         let schema = tool_definitions();
         let text = serde_json::to_string_pretty(&schema)
             .map_err(|e| ErrorData::internal_error(format!("serialization error: {e}"), None))?;
-        Ok(ReadResourceResult::new(vec![ResourceContents::text(
-            text,
-            SCHEMA_RESOURCE_URI,
-        )
-        .with_mime_type("application/json")
-        .with_meta(resource_content_meta())])
+        Ok(ReadResourceResult::new(vec![
+            ResourceContents::text(text, SCHEMA_RESOURCE_URI)
+                .with_mime_type("application/json")
+                .with_meta(resource_content_meta()),
+        ])
         .into())
     }
 
@@ -638,20 +637,25 @@ mod tests {
             .find(|tool| tool.name == "tailscale")
             .expect("tailscale tool should be advertised");
         assert!(tool.icons.as_ref().is_some_and(|icons| !icons.is_empty()));
-        assert!(tool
-            .meta
-            .as_ref()
-            .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE)));
+        assert!(
+            tool.meta
+                .as_ref()
+                .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE))
+        );
 
         let resource = schema_resource();
-        assert!(resource
-            .icons
-            .as_ref()
-            .is_some_and(|icons| !icons.is_empty()));
-        assert!(resource
-            .meta
-            .as_ref()
-            .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE)));
+        assert!(
+            resource
+                .icons
+                .as_ref()
+                .is_some_and(|icons| !icons.is_empty())
+        );
+        assert!(
+            resource
+                .meta
+                .as_ref()
+                .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE))
+        );
         assert!(resource.size.is_some_and(|size| size > 0));
 
         let prompts = prompts::list_prompts();
@@ -661,10 +665,12 @@ mod tests {
             .find(|prompt| prompt.name == "network_status")
             .expect("network_status prompt should be advertised");
         assert!(prompt.icons.as_ref().is_some_and(|icons| !icons.is_empty()));
-        assert!(prompt
-            .meta
-            .as_ref()
-            .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE)));
+        assert!(
+            prompt
+                .meta
+                .as_ref()
+                .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE))
+        );
     }
 
     #[test]

@@ -7,22 +7,24 @@ use super::metadata;
 
 pub(super) fn list_prompts() -> ListPromptsResult {
     ListPromptsResult {
-        prompts: vec![Prompt::new(
-            "network_status",
-            Some("Check all Tailscale devices and summarize tailnet health."),
-            None,
-        )
-        .with_title("Network Status")
-        .with_icons(metadata::icons())
-        .with_meta(metadata::meta(
-            "prompt",
-            json!({
-                "prompt": "network_status",
-                "recommendedTool": "tailscale",
-                "recommendedActions": ["devices", "device_routes", "acl", "dns"],
-                "purpose": "tailnet health summary"
-            }),
-        ))],
+        prompts: vec![
+            Prompt::new(
+                "network_status",
+                Some("Check all Tailscale devices and summarize tailnet health."),
+                None,
+            )
+            .with_title("Network Status")
+            .with_icons(metadata::icons())
+            .with_meta(metadata::meta(
+                "prompt",
+                json!({
+                    "prompt": "network_status",
+                    "recommendedTool": "tailscale",
+                    "recommendedActions": ["devices", "device_routes", "acl", "dns"],
+                    "purpose": "tailnet health summary"
+                }),
+            )),
+        ],
         ..Default::default()
     }
 }

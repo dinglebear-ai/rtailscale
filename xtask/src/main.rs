@@ -8,7 +8,7 @@
 //!   symlink-docs Symlink CLAUDE.md → AGENTS.md + GEMINI.md everywhere
 //!   check-env    Validate required env vars are set
 
-use anyhow::{bail, Context, Result};
+use anyhow::{Context, Result, bail};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
