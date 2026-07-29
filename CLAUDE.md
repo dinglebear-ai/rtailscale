@@ -14,12 +14,12 @@
 | Binary / CLI | `rtailscale` |
 | MCP tool | `tailscale` |
 | Cargo workspace | 2 members: `.` (root) and `xtask` |
-| Edition / MSRV | 2021 / Rust 1.86 |
+| Edition / MSRV | 2024 / Rust 1.97.1 |
 | Service port | `40040` (HTTP MCP, `TAILSCALE_MCP_PORT`) |
 | Upstream API | Tailscale REST v2 — devices, users, keys, ACL policy, DNS, routes |
 | Shared auth crate | `lab-auth`, pinned by git rev from `dinglebear-ai/labby` |
 
-**rmcp version:** `Cargo.toml` declares `rmcp = "1.6.0"`, but the caret range resolves to **1.7.0** in `Cargo.lock`. Trust the lock, not the manifest — the declared version is not a real pin.
+`Cargo.toml` pins **`rmcp = "=3.0.0-beta.2"`** exactly. Declared and locked agree, and the `=` prevents the caret drift this repo previously suffered (it declared 1.6.0 while the lock had moved on). `rmcp-macros` resolves to `3.0.0` as a transitive of the `macros` feature — do not pin it to the beta, it will not resolve.
 
 **No Claude Code plugin hooks.** `plugins/tailscale/` ships a manifest, `.mcp.json`, a skill, and a bundled binary — deliberately no `hooks/` directory and no `hooks` key in the manifest. `scripts/validate-plugin-layout.sh` enforces this. Setup is still reachable as an explicit CLI command (`rtailscale setup check|repair|plugin-hook`); it just no longer runs automatically at session start.
 

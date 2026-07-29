@@ -37,16 +37,20 @@ fn setup_plugin_hook_no_repair_json_contract() {
     assert_eq!(payload["exit_policy"], "blocking_failure");
     assert_eq!(payload["ran_repair"], false);
     assert_eq!(payload["no_repair"], true);
-    assert!(payload["blocking_failures"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .any(|value| value == "appdata_dir"));
-    assert!(payload["advisory_failures"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .any(|value| value == "env_file"));
+    assert!(
+        payload["blocking_failures"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|value| value == "appdata_dir")
+    );
+    assert!(
+        payload["advisory_failures"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|value| value == "env_file")
+    );
     assert!(!home.path().join(".tailscale-test").exists());
 }
 

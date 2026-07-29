@@ -1,7 +1,7 @@
 use std::net::TcpListener;
 use std::path::PathBuf;
 
-use anyhow::{bail, Result};
+use anyhow::{Result, bail};
 use serde::Serialize;
 
 const BINARY_NAME: &str = "rtailscale";

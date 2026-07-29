@@ -1,14 +1,16 @@
 use rmcp::model::{Icon, IconTheme, Meta};
-use serde_json::{json, Map, Value};
+use serde_json::{Map, Value, json};
 
 pub(super) const META_NAMESPACE: &str = "ai.dinglebear/tailscale-rmcp";
 const ICON_SRC: &str = "https://avatars.githubusercontent.com/u/38927646?v=4";
 
 pub(super) fn icons() -> Vec<Icon> {
-    vec![Icon::new(ICON_SRC)
-        .with_mime_type("image/png")
-        .with_sizes(vec!["460x460".to_string()])
-        .with_theme(IconTheme::Dark)]
+    vec![
+        Icon::new(ICON_SRC)
+            .with_mime_type("image/png")
+            .with_sizes(vec!["460x460".to_string()])
+            .with_theme(IconTheme::Dark),
+    ]
 }
 
 pub(super) fn icons_json() -> Vec<Value> {
