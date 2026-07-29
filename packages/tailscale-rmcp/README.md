@@ -82,10 +82,10 @@ The repo, crate, and npm package use the RMCP family name. The shipped binary is
 | Path | Command | Best for | Notes |
 |---|---|---|---|
 | npm / npx | `npx -y tailscale-rmcp --help` | Local MCP clients and quick trials. | Downloads the matching `rtailscale` binary from GitHub Releases. |
-| Release installer | `curl -fsSL https://raw.githubusercontent.com/jmagar/rtailscale/main/scripts/install.sh \| bash` | Host installs without Node. | Installs `rtailscale` for the current Linux host. |
+| Release installer | `curl -fsSL https://raw.githubusercontent.com/dinglebear-ai/rtailscale/main/scripts/install.sh \| bash` | Host installs without Node. | Installs `rtailscale` for the current Linux host. |
 | Docker / Compose | `docker compose up -d` | Shared HTTP MCP deployments. | Reads `.env` and exposes container port `40040`. |
 | Build from source | `cargo build --release` | Development and audits. | Produces `target/release/rtailscale`. |
-| Plugin | `claude plugin install plugins/tailscale` | Claude Code local plugin setup from this checkout. | Uses the packaged setup hook, skill, and local runtime metadata. |
+| Plugin | `claude plugin install plugins/tailscale` | Claude Code local plugin setup from this checkout. | Ships the skill, `.mcp.json`, and a bundled binary. No hooks — run `rtailscale setup check` yourself if you want the environment verified. |
 
 ### npm / npx
 
@@ -110,8 +110,8 @@ behavior only when testing packaging:
 ### Build From Source
 
 ```bash
-git clone https://github.com/jmagar/rtailscale
-cd tailscale-rmcp
+git clone https://github.com/dinglebear-ai/rtailscale
+cd rtailscale
 cargo build --release
 ./target/release/rtailscale --help
 ```
@@ -287,6 +287,9 @@ rtailscale delete-device <device-id> --confirm [--json]
 rtailscale doctor [--json]
 rtailscale setup check [--json]
 rtailscale setup repair [--json]
+rtailscale setup plugin-hook [--no-repair] [--json]
+rtailscale serve            # HTTP MCP (also the no-argument default)
+rtailscale mcp              # stdio MCP
 ```
 
 All commands currently print JSON. `--json` is accepted for parity with the rest
@@ -315,6 +318,10 @@ read `/data/.env`. Process environment overrides both.
 | `TAILSCALE_MCP_AUTH_ADMIN_EMAIL` | unset | Admin email for OAuth bootstrap. |
 | `TAILSCALE_MCP_ALLOWED_HOSTS` | unset | Extra accepted Host header values. |
 | `TAILSCALE_MCP_ALLOWED_ORIGINS` | unset | Extra accepted CORS origins. |
+| `TAILSCALE_MCP_HOME` | platform appdata | Override the config/log home used by `setup` and file logging. |
+
+The Tailscale API base URL is not configurable; it is fixed at
+`https://api.tailscale.com/api/v2` in `src/tailscale.rs`.
 
 ## Authentication
 
@@ -364,9 +371,13 @@ CLI shim         (src/cli.rs)        argv -> service -> stdout
 - GitHub Releases publish the `rtailscale` binary consumed by the npm launcher.
 - The npm package name is `tailscale-rmcp`; binary aliases are
   `tailscale-rmcp` and `rtailscale`.
-- Docker/OCI metadata uses `ghcr.io/jmagar/rtailscale:<version>`.
+- Docker/OCI metadata uses `ghcr.io/jmagar/tailscale-rmcp:<version>` (see
+  `docker-compose.prod.yml`). The image path still uses the pre-transfer owner
+  namespace even though the repo now lives at `dinglebear-ai/rtailscale`.
 - `plugins/tailscale/.mcp.json` must launch `npx -y tailscale-rmcp mcp` so
   stdio clients start the MCP transport rather than the HTTP server.
+- `plugins/tailscale/` ships no Claude Code hooks; `scripts/validate-plugin-layout.sh`
+  fails if a `hooks/` directory reappears.
 - The root README is curated. Source of truth for action behavior and config
   defaults is `src/`, plus the package, plugin, and registry manifests.
 
@@ -383,7 +394,7 @@ npm --prefix packages/tailscale-rmcp run check
 ## Verification
 
 ```bash
-python3 /home/jmagar/workspace/soma/scripts/check-readme-guide.py README.md
+just validate-plugin
 npm --prefix packages/tailscale-rmcp run check
 cargo check
 cargo test
@@ -437,19 +448,19 @@ authenticated gateway.
 
 ## Related Servers
 
-- [soma](https://github.com/jmagar/soma) - RMCP runtime for provider-backed MCP servers.
-- [unifi-rmcp](https://github.com/jmagar/runifi) - UniFi controller REST API bridge.
-- [unraid-rmcp](https://github.com/jmagar/runraid) - Unraid GraphQL bridge for NAS and server management.
-- [apprise-rmcp](https://github.com/jmagar/rapprise) - Apprise notification fan-out bridge for many delivery backends.
-- [gotify-rmcp](https://github.com/jmagar/rgotify) - Gotify push notification bridge for sends, messages, apps, and clients.
-- [arcane-rmcp](https://github.com/jmagar/rarcane) - Arcane Docker management bridge for containers and related resources.
-- [yarr](https://github.com/jmagar/yarr) - Media-stack bridge for Sonarr, Radarr, Prowlarr, Plex, and related services.
-- [ytdl-rmcp](https://github.com/jmagar/rytdl) - Media download and metadata workflow server.
-- [synapse-rmcp](https://github.com/jmagar/synapse) - Local Synapse workflow server for scout and flux actions.
-- [cortex](https://github.com/jmagar/cortex) - Syslog and homelab log aggregation MCP server.
-- [axon](https://github.com/jmagar/axon) - RAG, crawl, scrape, extract, and semantic search project.
-- [labby](https://github.com/jmagar/labby) - Homelab control plane and MCP gateway project.
-- [lumen](https://github.com/jmagar/lumen) - Local semantic code search MCP server.
+- [soma](https://github.com/dinglebear-ai/soma) - RMCP runtime and scaffold for provider-backed MCP servers.
+- [unifi-rmcp](https://github.com/dinglebear-ai/runifi) - UniFi controller REST API bridge.
+- [unraid](https://github.com/dinglebear-ai/unraid) - Unraid monorepo; `unraid-rs/` is the GraphQL bridge for NAS and server management.
+- [apprise-rmcp](https://github.com/dinglebear-ai/rapprise) - Apprise notification fan-out bridge for many delivery backends.
+- [gotify-rmcp](https://github.com/dinglebear-ai/rgotify) - Gotify push notification bridge for sends, messages, apps, and clients.
+- [arcane-rmcp](https://github.com/dinglebear-ai/rarcane) - Arcane Docker management bridge for containers and related resources.
+- [yarr](https://github.com/dinglebear-ai/yarr) - Media-stack bridge for Sonarr, Radarr, Prowlarr, Plex, and related services.
+- [ytdl-rmcp](https://github.com/dinglebear-ai/rytdl) - Media download and metadata workflow server.
+- [synapse-rmcp](https://github.com/dinglebear-ai/synapse) - Local Synapse workflow server for scout and flux actions.
+- [cortex](https://github.com/dinglebear-ai/cortex) - Syslog and homelab log aggregation MCP server.
+- [axon](https://github.com/dinglebear-ai/axon) - RAG, crawl, scrape, extract, and semantic search project.
+- [labby](https://github.com/dinglebear-ai/labby) - Homelab control plane and MCP gateway project.
+- [lumen](https://github.com/dinglebear-ai/lumen) - Local semantic code search MCP server.
 
 ## Documentation
 

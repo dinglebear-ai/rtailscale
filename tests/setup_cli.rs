@@ -50,10 +50,11 @@ fn setup_plugin_hook_no_repair_json_contract() {
     assert!(!home.path().join(".tailscale-test").exists());
 }
 
-/// The hook now calls the binary directly (no plugin-setup.sh wrapper). This
-/// verifies `apply_plugin_options()` maps `CLAUDE_PLUGIN_OPTION_*` into the
-/// `TAILSCALE_*` env vars the setup checks read: `CLAUDE_PLUGIN_DATA` reaches
-/// `appdata_dir` and `CLAUDE_PLUGIN_OPTION_MCP_PORT` reaches `port_check`.
+/// `setup plugin-hook` is an explicit CLI command (the plugin ships no Claude
+/// Code hooks). This verifies `apply_plugin_options()` maps
+/// `CLAUDE_PLUGIN_OPTION_*` into the `TAILSCALE_*` env vars the setup checks
+/// read: `CLAUDE_PLUGIN_DATA` reaches `appdata_dir` and
+/// `CLAUDE_PLUGIN_OPTION_MCP_PORT` reaches `port_check`.
 #[test]
 fn plugin_hook_maps_plugin_options_into_env() {
     let data = tempfile::tempdir().unwrap();
@@ -102,20 +103,20 @@ fn plugin_hook_maps_plugin_options_into_env() {
     );
 }
 
-/// The plugin hook config must call the binary directly.
+/// The plugin intentionally ships no Claude Code hooks.
 #[test]
-fn claude_hooks_call_binary_directly() {
-    let hooks_path =
-        std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("plugins/tailscale/hooks/hooks.json");
-    let hooks: serde_json::Value =
-        serde_json::from_str(&fs::read_to_string(hooks_path).unwrap()).unwrap();
-    for hook_name in ["SessionStart", "ConfigChange"] {
-        let command = hooks["hooks"][hook_name][0]["hooks"][0]["command"]
-            .as_str()
-            .unwrap();
-        assert_eq!(
-            command,
-            "${CLAUDE_PLUGIN_ROOT}/bin/rtailscale setup plugin-hook"
-        );
-    }
+fn plugin_ships_no_hooks() {
+    let plugin_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("plugins/tailscale");
+    assert!(
+        !plugin_root.join("hooks").exists(),
+        "plugins/tailscale/hooks must not exist"
+    );
+    let manifest: serde_json::Value = serde_json::from_str(
+        &fs::read_to_string(plugin_root.join(".claude-plugin/plugin.json")).unwrap(),
+    )
+    .unwrap();
+    assert!(
+        manifest.get("hooks").is_none(),
+        "plugin manifest must not declare hooks"
+    );
 }
