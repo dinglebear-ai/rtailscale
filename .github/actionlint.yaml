@@ -1,0 +1,8 @@
+self-hosted-runner:
+  labels:
+    - rmcp-template
+    - tootie
+    - unraid
+    - dookie
+
+config-variables: null

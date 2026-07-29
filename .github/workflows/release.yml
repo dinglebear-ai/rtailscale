@@ -13,10 +13,9 @@ permissions:
   contents: write
 
 env:
-  # REQUIRED under a compile wrapper (soldr/zccache).
+  # REQUIRED under a compile wrapper (kache).
   CARGO_INCREMENTAL: "0"
   # Persistent per-runner zccache compile store (replaces the old sccache dir).
-  SOLDR_CACHE_DIR: ${{ github.workspace }}/../.soldr-cache
 
 jobs:
   release-meta:
@@ -72,8 +71,8 @@ jobs:
         with:
           ref: ${{ needs.release-meta.outputs.tag_name }}
 
-      - name: Install Rust + soldr
-        uses: ./.github/actions/setup-rust-soldr
+      - name: Install Rust and kache
+        uses: ./.github/actions/setup-rust-kache
         with:
           targets: ${{ matrix.target }}
 
