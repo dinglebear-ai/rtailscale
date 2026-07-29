@@ -223,8 +223,11 @@ fn apply_plugin_options() {
             if s.is_empty() || s.contains('\n') || s.contains('\r') {
                 continue;
             }
-            // edition 2021: set_var is safe (no unsafe block required).
-            std::env::set_var(dest, v);
+            // SAFETY: edition 2024 marks `set_var` unsafe because it is not
+            // thread-safe. This runs at the very start of the `setup
+            // plugin-hook` subcommand, before any other task reads the
+            // environment, so no concurrent env access can observe the write.
+            unsafe { std::env::set_var(dest, v) };
         }
     }
 }

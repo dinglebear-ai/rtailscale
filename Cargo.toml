@@ -2,11 +2,14 @@
 members = [".", "xtask"]
 resolver = "2"
 
+[workspace.lints.clippy]
+mod_module_files = "deny"
+
 [package]
 name = "tailscale-rmcp"
 version = "0.1.4"
-edition = "2021"
-rust-version = "1.86"
+edition = "2024"
+rust-version = "1.92"
 categories = ["command-line-utilities", "development-tools"]
 keywords = ["mcp", "tailscale", "tailnet", "networking", "rmcp"]
 repository = "https://github.com/jmagar/rtailscale"
@@ -24,7 +27,7 @@ tokio = { version = "1", features = ["full"] }
 
 # HTTP / MCP transport
 axum = "0.8"
-rmcp = { version = "1.6.0", default-features = false, features = [
+rmcp = { version = "=3.0.0-beta.2", default-features = false, features = [
   "server",
   "macros",
   "transport-streamable-http-server",
@@ -64,3 +67,6 @@ test-support = []
 tailscale-rmcp = { path = ".", features = ["test-support"] }
 tokio = { version = "1", features = ["full"] }
 tempfile = "3"
+
+[lints]
+workspace = true

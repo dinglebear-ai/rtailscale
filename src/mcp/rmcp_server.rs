@@ -3,11 +3,11 @@ use std::{borrow::Cow, net::Ipv6Addr, sync::Arc, time::Instant};
 use lab_auth::AuthContext;
 use rmcp::{
     model::{
-        CallToolRequestParams, CallToolResult, Content, GetPromptRequestParams, GetPromptResult,
-        Implementation, ListPromptsResult, ListResourcesResult, ListToolsResult, Meta,
-        PaginatedRequestParams, RawResource, ReadResourceRequestParams, ReadResourceResult,
-        Resource, ResourceContents, ServerCapabilities, ServerInfo, Tool, ToolAnnotations,
-        ToolExecution,
+        CallToolRequestParams, CallToolResponse, CallToolResult, ContentBlock,
+        GetPromptRequestParams, GetPromptResponse, Implementation, ListPromptsResult,
+        ListResourcesResult, ListToolsResult, Meta, PaginatedRequestParams,
+        ReadResourceRequestParams, ReadResourceResponse, ReadResourceResult, Resource,
+        ResourceContents, ServerCapabilities, ServerInfo, Tool, ToolAnnotations,
     },
     service::RequestContext,
     transport::streamable_http_server::{
@@ -69,7 +69,7 @@ impl ServerHandler for TailscaleRmcpServer {
         &self,
         request: CallToolRequestParams,
         context: RequestContext<RoleServer>,
-    ) -> Result<CallToolResult, ErrorData> {
+    ) -> Result<CallToolResponse, ErrorData> {
         let tool_name = request.name.to_string();
 
         let action: String = request
@@ -117,7 +117,7 @@ impl ServerHandler for TailscaleRmcpServer {
                     error = %error,
                     "MCP tool execution failed"
                 );
-                Ok(tool_error_result(&action, &error))
+                Ok(tool_error_result(&action, &error).into())
             }
         }
     }
@@ -140,7 +140,7 @@ impl ServerHandler for TailscaleRmcpServer {
         &self,
         request: ReadResourceRequestParams,
         context: RequestContext<RoleServer>,
-    ) -> Result<ReadResourceResult, ErrorData> {
+    ) -> Result<ReadResourceResponse, ErrorData> {
         require_auth_context(&self.state, &context)?;
         if request.uri != SCHEMA_RESOURCE_URI {
             return Err(ErrorData::invalid_params(
@@ -156,7 +156,8 @@ impl ServerHandler for TailscaleRmcpServer {
             SCHEMA_RESOURCE_URI,
         )
         .with_mime_type("application/json")
-        .with_meta(resource_content_meta())]))
+        .with_meta(resource_content_meta())])
+        .into())
     }
 
     // ── prompts ───────────────────────────────────────────────────────────────
@@ -174,9 +175,11 @@ impl ServerHandler for TailscaleRmcpServer {
         &self,
         request: GetPromptRequestParams,
         context: RequestContext<RoleServer>,
-    ) -> Result<GetPromptResult, ErrorData> {
+    ) -> Result<GetPromptResponse, ErrorData> {
         require_auth_context(&self.state, &context)?;
-        prompts::get_prompt(request).map_err(|e| ErrorData::invalid_params(e.to_string(), None))
+        prompts::get_prompt(request)
+            .map(Into::into)
+            .map_err(|e| ErrorData::invalid_params(e.to_string(), None))
     }
 
     // ── server info ───────────────────────────────────────────────────────────
@@ -212,7 +215,7 @@ impl ServerHandler for TailscaleRmcpServer {
 
 pub fn streamable_http_config(config: &McpConfig) -> StreamableHttpServerConfig {
     StreamableHttpServerConfig::default()
-        .with_stateful_mode(false)
+        .with_legacy_session_mode(false)
         .with_json_response(true)
         .with_allowed_hosts(allowed_hosts(config))
         .with_allowed_origins(allowed_origins(config))
@@ -240,17 +243,17 @@ const SCHEMA_RESOURCE_URI: &str = "tailscale://schema/mcp-tool";
 fn schema_resource() -> Resource {
     let size = serde_json::to_vec_pretty(&tool_definitions())
         .ok()
-        .and_then(|bytes| u32::try_from(bytes.len()).ok());
-    let mut raw = RawResource::new(SCHEMA_RESOURCE_URI, "tailscale tool schema")
+        .and_then(|bytes| u64::try_from(bytes.len()).ok());
+    let mut resource = Resource::new(SCHEMA_RESOURCE_URI, "tailscale tool schema")
         .with_title("Tailscale Tool Schema")
         .with_description("JSON schema for the tailscale MCP tool and its action-based parameters")
         .with_mime_type("application/json")
         .with_icons(metadata::icons())
         .with_meta(resource_meta());
     if let Some(size) = size {
-        raw = raw.with_size(size);
+        resource = resource.with_size(size);
     }
-    Resource::new(raw, None)
+    resource
 }
 
 fn resource_meta() -> Meta {
@@ -328,18 +331,6 @@ fn rmcp_tool_from_json(value: Value) -> Result<Tool, ErrorData> {
             parsed.open_world_hint = annotations.get("openWorldHint").and_then(Value::as_bool);
             parsed
         });
-    tool.execution = value
-        .get("execution")
-        .cloned()
-        .map(|execution| {
-            serde_json::from_value::<ToolExecution>(execution).map_err(|e| {
-                ErrorData::internal_error(
-                    format!("tool definition has invalid execution: {e}"),
-                    None,
-                )
-            })
-        })
-        .transpose()?;
     tool.icons = value
         .get("icons")
         .cloned()
@@ -357,13 +348,13 @@ fn rmcp_tool_from_json(value: Value) -> Result<Tool, ErrorData> {
     Ok(tool)
 }
 
-fn tool_result_from_json(value: Value) -> Result<CallToolResult, ErrorData> {
+fn tool_result_from_json(value: Value) -> Result<CallToolResponse, ErrorData> {
     let envelope = success_envelope(value);
     let text = serde_json::to_string_pretty(&envelope)
         .map_err(|e| ErrorData::internal_error(format!("serialization error: {e}"), None))?;
-    let mut result = CallToolResult::success(vec![Content::text(text)]);
+    let mut result = CallToolResult::success(vec![ContentBlock::text(text)]);
     result.structured_content = Some(envelope);
-    Ok(result)
+    Ok(result.into())
 }
 
 fn tool_error_result(action: &str, error: &anyhow::Error) -> CallToolResult {
@@ -415,7 +406,7 @@ fn structured_error_result(
     let text = serde_json::to_string_pretty(&payload).unwrap_or_else(|_| message.to_string());
 
     let mut result = CallToolResult::structured_error(payload);
-    result.content = vec![Content::text(text)];
+    result.content = vec![ContentBlock::text(text)];
     result
 }
 
@@ -638,10 +629,9 @@ fn extract_origin(url: &str) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rmcp::model::TaskSupport;
 
     #[test]
-    fn advertised_surfaces_include_icons_meta_and_execution_metadata() {
+    fn advertised_surfaces_include_icons_and_meta() {
         let tools = rmcp_tool_definitions().expect("tool definitions should parse");
         let tool = tools
             .iter()
@@ -652,25 +642,17 @@ mod tests {
             .meta
             .as_ref()
             .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE)));
-        assert_eq!(
-            tool.execution
-                .as_ref()
-                .and_then(|execution| execution.task_support),
-            Some(TaskSupport::Forbidden)
-        );
 
         let resource = schema_resource();
         assert!(resource
-            .raw
             .icons
             .as_ref()
             .is_some_and(|icons| !icons.is_empty()));
         assert!(resource
-            .raw
             .meta
             .as_ref()
             .is_some_and(|meta| meta.0.contains_key(metadata::META_NAMESPACE)));
-        assert!(resource.raw.size.is_some_and(|size| size > 0));
+        assert!(resource.size.is_some_and(|size| size > 0));
 
         let prompts = prompts::list_prompts();
         let prompt = prompts
@@ -692,7 +674,10 @@ mod tests {
                 { "hostname": "node-a" }
             ]
         });
-        let result = tool_result_from_json(data.clone()).expect("tool result should serialize");
+        let response = tool_result_from_json(data.clone()).expect("tool result should serialize");
+        let CallToolResponse::Complete(result) = response else {
+            panic!("tool_result_from_json should produce a complete result, got {response:?}");
+        };
 
         assert_eq!(result.is_error, Some(false));
         let structured = result

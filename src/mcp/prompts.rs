@@ -1,6 +1,5 @@
 use rmcp::model::{
-    GetPromptRequestParams, GetPromptResult, ListPromptsResult, Prompt, PromptMessage,
-    PromptMessageRole,
+    GetPromptRequestParams, GetPromptResult, ListPromptsResult, Prompt, PromptMessage, Role,
 };
 use serde_json::json;
 
@@ -31,7 +30,7 @@ pub(super) fn list_prompts() -> ListPromptsResult {
 pub(super) fn get_prompt(request: GetPromptRequestParams) -> anyhow::Result<GetPromptResult> {
     match request.name.as_str() {
         "network_status" => Ok(GetPromptResult::new(vec![PromptMessage::new_text(
-            PromptMessageRole::User,
+            Role::User,
             "Use the tailscale tool with action=devices to retrieve all devices in the tailnet. \
              Then summarize: total device count, how many are online vs offline, any devices \
              that appear to have lost connectivity or have expired keys, and any unusual route \
