@@ -3,7 +3,7 @@
 # baseline-and-diff scoping works.
 #
 # A gate that only ever passes is worse than no gate: it converts "the cache
-# broke" into "CI is green". A gate that always FAILS is just as bad — people
+# broke" into "CI is green". A gate that always FAILS is just as bad -- people
 # learn to ignore it. Both directions are tested here.
 set -euo pipefail
 
@@ -42,7 +42,7 @@ take_baseline >/dev/null || fail "--baseline failed"
 echo "ok: baseline written"
 
 # --- A build into an ISOLATED, EMPTY store with NO remote: every unit is a
-# cold miss. 0% hit rate, 0 remote hits — a genuine degraded profile.
+# cold miss. 0% hit rate, 0 remote hits -- a genuine degraded profile.
 # KACHE_EVENT_ROOT pins the root stamped on events so --root matches exactly.
 (
   cd "$probe/cold"

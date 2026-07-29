@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# kache-gate.sh — fail the build when the compiler cache silently degrades.
+# kache-gate.sh -- fail the build when the compiler cache silently degrades.
 #
 # WHY THIS EXISTS
 # kache never fails a build on a cache problem (0.12.0 PR #600, "never fail a
@@ -34,7 +34,7 @@
 #   KACHE_GATE_REQUIRE_DAEMON 1 => require a reachable daemon               (default 0)
 #   KACHE_GATE_ROOT           build tree to scope to  (default $PWD; --root DOES work)
 #
-# Exit: 0 pass · 1 gate violation · 2 report unusable
+# Exit: 0 pass / 1 gate violation / 2 report unusable
 set -uo pipefail
 
 BASELINE="${KACHE_GATE_BASELINE:-${RUNNER_TEMP:-/tmp}/kache-gate-baseline.json}"
@@ -89,7 +89,7 @@ else
   # cumulative counters make every threshold measure all history.
   before='{"local_hits":0,"prefetch_hits":0,"remote_hits":0,"misses":0,"errors":0,"fallbacks":0,"total_crates":0,"time_saved_ms":0}'
   scope="ALL HISTORY (no baseline at $BASELINE)"
-  echo "kache-gate: WARNING: no baseline found — thresholds will measure the whole event log," >&2
+  echo "kache-gate: WARNING: no baseline found -- thresholds will measure the whole event log," >&2
   echo "kache-gate: WARNING: not this build. Run 'kache-gate.sh --baseline' before the build." >&2
 fi
 
@@ -139,7 +139,7 @@ violation() { echo "kache-gate: VIOLATION: $*" >&2; violations=$((violations + 1
 
 # A build that compiled nothing cacheable cannot be judged on hit rate.
 if [ "$cacheable" -eq 0 ]; then
-  echo "kache-gate: no cacheable compiles in this build — skipping hit-rate and remote checks"
+  echo "kache-gate: no cacheable compiles in this build -- skipping hit-rate and remote checks"
 else
   floor_ok="$(awk -v r="$hit_rate" -v m="$MIN_HIT_RATE" 'BEGIN { print (int(r) >= int(m)) ? 1 : 0 }')"
   [ "$floor_ok" = "1" ] || violation "hit rate ${hit_rate}% is below the ${MIN_HIT_RATE}% floor"
