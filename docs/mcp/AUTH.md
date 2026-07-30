@@ -1,3 +1,9 @@
+---
+title: "MCP Auth"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # MCP Auth
 
 Stdio MCP is local and trusted. HTTP MCP uses `AuthPolicy` from `src/mcp.rs`.

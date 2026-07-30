@@ -461,10 +461,10 @@ fn print_doctor_report(checks: &[DoctorCheck]) {
                 eprintln!("    → {hint}");
             }
 
-            if let Some(ms) = check.latency_ms {
-                if check.ok {
-                    eprintln!("    ({ms} ms)");
-                }
+            if let Some(ms) = check.latency_ms
+                && check.ok
+            {
+                eprintln!("    ({ms} ms)");
             }
         }
         eprintln!();

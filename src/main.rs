@@ -1,3 +1,5 @@
+//! `rtailscale` command-line and MCP server entry point.
+
 use anyhow::Result;
 use rmcp::{ServiceExt, transport::stdio};
 use tracing::info;

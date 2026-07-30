@@ -1,8 +1,14 @@
 [package]
 name = "xtask"
-version = "0.1.4"
+version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+readme.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Repository automation for tailscale-rmcp."
 publish = false
 
 [[bin]]
@@ -10,7 +16,12 @@ name = "xtask"
 path = "src/main.rs"
 
 [dependencies]
-anyhow = "1"
+anyhow.workspace = true
 
 [lints]
 workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+targets = ["x86_64-unknown-linux-gnu"]

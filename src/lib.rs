@@ -1,3 +1,5 @@
+//! Tailscale MCP server, CLI, configuration, and API integration.
+
 pub mod app;
 pub mod cli;
 pub mod config;

@@ -1,8 +1,8 @@
 {
   "name": "rustscale",
-  "description": "Tailscale network management via MCP — query devices, ACL, DNS, users, and API keys.",
-  "homepage": "https://github.com/jmagar/rtailscale",
-  "repository": "https://github.com/jmagar/rtailscale",
+  "description": "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP.",
+  "homepage": "https://rtailscale.dinglebear.ai",
+  "repository": "https://github.com/dinglebear-ai/rtailscale",
   "license": "MIT",
   "keywords": [
     "tailscale",
@@ -23,7 +23,7 @@
       "Read",
       "Write"
     ],
-    "websiteURL": "https://github.com/jmagar/rtailscale",
+    "websiteURL": "https://rtailscale.dinglebear.ai",
     "defaultPrompt": [
       "List all devices in my Tailscale network.",
       "Show the ACL policy for my tailnet.",
@@ -32,8 +32,8 @@
     "brandColor": "#0F172A"
   },
   "author": {
-    "name": "Jacob Magar",
-    "email": "jmagar@users.noreply.github.com",
-    "url": "https://github.com/jmagar"
+    "name": "dinglebear.ai",
+    "email": "hello@dinglebear.ai",
+    "url": "https://dinglebear.ai"
   }
 }

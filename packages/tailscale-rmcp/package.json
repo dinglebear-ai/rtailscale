@@ -1,16 +1,16 @@
 {
   "name": "tailscale-rmcp",
   "version": "0.1.4",
-  "description": "Node launcher for the Tailscale Rust MCP server and rtailscale CLI for tailnet operations.",
+  "description": "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP.",
   "license": "MIT",
-  "homepage": "https://github.com/jmagar/rtailscale#readme",
+  "homepage": "https://rtailscale.dinglebear.ai",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jmagar/rtailscale.git",
+    "url": "git+https://github.com/dinglebear-ai/rtailscale.git",
     "directory": "packages/tailscale-rmcp"
   },
   "bugs": {
-    "url": "https://github.com/jmagar/rtailscale/issues"
+    "url": "https://github.com/dinglebear-ai/rtailscale/issues"
   },
   "bin": {
     "tailscale-rmcp": "bin/rtailscale.js",

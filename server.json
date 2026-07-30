@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "ai.dinglebear/tailscale-rmcp",
   "title": "Tailscale RMCP",
-  "description": "Rust MCP server and CLI for Tailscale devices, users, keys, policies, and auth.",
+  "description": "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP.",
   "version": "0.1.4",
   "remotes": [
     {
@@ -18,9 +18,9 @@
       ]
     }
   ],
-  "websiteUrl": "https://github.com/jmagar/rtailscale",
+  "websiteUrl": "https://rtailscale.dinglebear.ai",
   "repository": {
-    "url": "https://github.com/jmagar/rtailscale",
+    "url": "https://github.com/dinglebear-ai/rtailscale",
     "source": "github",
     "id": "1238227291"
   },
@@ -74,8 +74,8 @@
           "format": "string",
           "isRequired": false,
           "isSecret": false,
-          "default": "jmagar/rtailscale",
-          "placeholder": "jmagar/rtailscale"
+          "default": "dinglebear-ai/rtailscale",
+          "placeholder": "dinglebear-ai/rtailscale"
         },
         {
           "name": "TAILSCALE_RMCP_RELEASE_BASE_URL",
@@ -109,7 +109,7 @@
       },
       "buildInfo": {
         "version": "0.1.4",
-        "repository": "https://github.com/jmagar/rtailscale"
+        "repository": "https://github.com/dinglebear-ai/rtailscale"
       }
     }
   }

@@ -1,3 +1,9 @@
+---
+title: "Repository Rules"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # Repository Rules
 
 - Keep `cli.rs` and `src/mcp/tools.rs` thin.

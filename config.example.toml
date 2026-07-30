@@ -1,4 +1,4 @@
-# tailscale-rmcp configuration
+# config.example.toml — copy to config.toml and edit
 # Env vars (TAILSCALE_* prefix) override these values.
 # Required: TAILSCALE_API_KEY must be set (env var or uncommented below).
 

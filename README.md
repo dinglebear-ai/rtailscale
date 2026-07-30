@@ -1,7 +1,7 @@
 # tailscale-rmcp
 
-`tailscale-rmcp` is a Rust MCP server and CLI for managing a
-[Tailscale](https://tailscale.com/) tailnet through the Tailscale REST API.
+MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes,
+users, keys, DNS, and ACL policy over stdio or streamable HTTP.
 
 It exposes one MCP tool, `tailscale`, plus the `rtailscale` CLI. Agents can
 list devices, inspect routes, read API keys, ACL policy, DNS settings, and
@@ -371,7 +371,7 @@ CLI shim         (src/cli.rs)        argv -> service -> stdout
 - GitHub Releases publish the `rtailscale` binary consumed by the npm launcher.
 - The npm package name is `tailscale-rmcp`; binary aliases are
   `tailscale-rmcp` and `rtailscale`.
-- Docker/OCI metadata uses `ghcr.io/jmagar/tailscale-rmcp:<version>` (see
+- Docker/OCI metadata uses `ghcr.io/dinglebear-ai/rtailscale:<version>` (see
   `docker-compose.prod.yml`). The image path still uses the pre-transfer owner
   namespace even though the repo now lives at `dinglebear-ai/rtailscale`.
 - `plugins/tailscale/.mcp.json` must launch `npx -y tailscale-rmcp mcp` so
