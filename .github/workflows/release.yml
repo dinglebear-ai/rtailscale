@@ -17,6 +17,7 @@ jobs:
   meta:
     name: Validate release version
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     outputs:
       version: ${{ steps.version.outputs.value }}
     steps:
@@ -27,10 +28,29 @@ jobs:
           [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]]
           echo "value=${TAG#v}" >> "$GITHUB_OUTPUT"
 
+  preflight:
+    name: Verify released source
+    needs: [meta]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Require the tag commit on main
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main
+      - name: Require synchronized release metadata
+        run: bash scripts/check-version-sync.sh
+
   build:
     name: Build hosted x86_64 release assets
-    needs: [meta]
-    uses: dinglebear-ai/workflows/.github/workflows/hosted-rust-platform-release.yml@d7bbe71ddc1157e32ed0bebf928fc07438ba58b0
+    needs: [meta, preflight]
+    uses: dinglebear-ai/workflows/.github/workflows/hosted-rust-platform-release.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
     with:
       checkout-ref: ${{ github.event.release.tag_name }}
       targets-json: >-
@@ -59,7 +79,7 @@ jobs:
   github-release:
     name: Attach verified release assets
     needs: [build]
-    uses: dinglebear-ai/workflows/.github/workflows/github-release.yml@d7bbe71ddc1157e32ed0bebf928fc07438ba58b0
+    uses: dinglebear-ai/workflows/.github/workflows/github-release.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
     with:
       release-tag: ${{ github.event.release.tag_name }}
       artifact-pattern: rtailscale-*
@@ -67,7 +87,7 @@ jobs:
   npm:
     name: Publish npm launcher
     needs: [meta, github-release]
-    uses: dinglebear-ai/workflows/.github/workflows/npm-trusted-publish.yml@d7bbe71ddc1157e32ed0bebf928fc07438ba58b0
+    uses: dinglebear-ai/workflows/.github/workflows/npm-trusted-publish.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
     with:
       checkout-ref: ${{ github.event.release.tag_name }}
       expected-version: ${{ needs.meta.outputs.version }}

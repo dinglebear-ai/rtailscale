@@ -22,16 +22,8 @@ fi
 
 # ── 2. Required environment variables ────────────────────────────────────────
 # Fail fast with a clear message rather than a cryptic runtime error.
-missing_vars=""
-for var in TAILSCALE_API_KEY; do
-    # POSIX-safe indirect variable expansion
-    eval "val=\${${var}:-}"
-    if [ -z "${val}" ]; then
-        missing_vars="${missing_vars} ${var}"
-    fi
-done
-if [ -n "${missing_vars}" ]; then
-    echo "FATAL: required environment variables not set:${missing_vars}" >&2
+if [ -z "${TAILSCALE_API_KEY:-}" ]; then
+    echo "FATAL: required environment variable not set: TAILSCALE_API_KEY" >&2
     echo "  Set them in your .env file or with docker run -e flags." >&2
     echo "  Example: -e TAILSCALE_API_KEY=tskey-api-..." >&2
     exit 1
