@@ -1,3 +1,9 @@
+---
+title: "Tool Schema"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # Tool Schema
 
 The `tailscale` tool has one required input field:

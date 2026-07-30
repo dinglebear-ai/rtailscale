@@ -1,3 +1,9 @@
+---
+title: "Configuration Reference"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # Configuration Reference
 
 `tailscale-rmcp` loads `config.toml` from the working directory, then applies

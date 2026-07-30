@@ -22,7 +22,7 @@ services:
     <<: *common-service
     # Service is named tailscale-mcp (not tailscale) to avoid conflicting with
     # the Tailscale daemon / tailscaled container that may run on the same host.
-    image: ghcr.io/jmagar/tailscale-rmcp:latest
+    image: ghcr.io/dinglebear-ai/rtailscale:latest
     container_name: rtailscale
     env_file:
       - path: .env

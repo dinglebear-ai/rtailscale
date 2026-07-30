@@ -3,26 +3,52 @@ members = [".", "xtask"]
 resolver = "2"
 
 [workspace.package]
-
-# Fleet edition (ADR-0002). Members inherit via edition.workspace = true.
+version = "0.1.4"
 edition = "2024"
-# Fleet MSRV — the floor this repo supports. A separate promise from
-# rust-toolchain.toml's channel, which is what we BUILD with. Both are
-# 1.97.1 as of 2026-07-29 (ADR-0001 toolchain, ADR-0024 MSRV).
 rust-version = "1.97.1"
+authors = ["dinglebear.ai <hello@dinglebear.ai>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://rtailscale.dinglebear.ai"
+repository = "https://github.com/dinglebear-ai/rtailscale"
+description = "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP."
+
+[workspace.dependencies]
+anyhow = "1"
+rmcp = { version = "=3.0.0-beta.2", default-features = false }
+
 [workspace.lints.clippy]
+missing_safety_doc = "deny"
 mod_module_files = "deny"
+
+[workspace.lints.rust]
+missing_crate_level_docs = "deny"
+unsafe_op_in_unsafe_fn = "deny"
+
+[workspace.lints.rustdoc]
+broken_intra_doc_links = "deny"
+invalid_codeblock_attributes = "deny"
+invalid_rust_codeblocks = "deny"
+private_intra_doc_links = "warn"
+bare_urls = "warn"
+redundant_explicit_links = "warn"
+unescaped_backticks = "warn"
+invalid_html_tags = "deny"
 
 [package]
 name = "tailscale-rmcp"
-version = "0.1.4"
+version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
-categories = ["command-line-utilities", "development-tools"]
+authors.workspace = true
+license.workspace = true
+readme.workspace = true
+homepage.workspace = true
+repository.workspace = true
+publish = false
+categories = ["command-line-utilities", "api-bindings", "network-programming", "development-tools"]
 keywords = ["mcp", "tailscale", "tailnet", "networking", "rmcp"]
-repository = "https://github.com/jmagar/rtailscale"
-homepage = "https://github.com/jmagar/rtailscale#readme"
-description = "Rust MCP server and CLI for Tailscale tailnet operations across devices, users, keys, and policy workflows."
+description.workspace = true
 autobins = false
 
 [[bin]]
@@ -35,7 +61,7 @@ tokio = { version = "1", features = ["full"] }
 
 # HTTP / MCP transport
 axum = "0.8"
-rmcp = { version = "=3.0.0-beta.2", default-features = false, features = [
+rmcp = { workspace = true, features = [
   "server",
   "macros",
   "transport-streamable-http-server",
@@ -65,7 +91,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "fmt", "chrono"] }
 
 # Errors
-anyhow = "1"
+anyhow.workspace = true
 dotenvy = "0.15.7"
 
 [features]
@@ -78,3 +104,8 @@ tempfile = "3"
 
 [lints]
 workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+targets = ["x86_64-unknown-linux-gnu"]

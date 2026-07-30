@@ -1,6 +1,6 @@
 //! cargo xtask — repo automation for tailscale-rmcp
 //!
-//! Usage: cargo xtask <command>
+//! Usage: `cargo xtask <command>`
 //!
 //! Commands:
 //!   dist         Build release binary, copy to bin/, update Git LFS
@@ -129,7 +129,7 @@ fn symlink_docs() -> Result<()> {
     Ok(())
 }
 
-fn visit_claude_md(dir: &Path, root: &Path, count: &mut usize) -> Result<()> {
+fn visit_claude_md(dir: &Path, _root: &Path, count: &mut usize) -> Result<()> {
     for entry in std::fs::read_dir(dir)? {
         let entry = entry?;
         let path = entry.path();
@@ -142,7 +142,7 @@ fn visit_claude_md(dir: &Path, root: &Path, count: &mut usize) -> Result<()> {
         }
 
         if path.is_dir() {
-            visit_claude_md(&path, root, count)?;
+            visit_claude_md(&path, _root, count)?;
         } else if name_str == "CLAUDE.md" {
             let dir_path = path.parent().unwrap();
             for link_name in &["AGENTS.md", "GEMINI.md"] {

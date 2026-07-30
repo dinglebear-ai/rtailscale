@@ -1,3 +1,9 @@
+---
+title: "mcporter Smoke Tests"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # mcporter Smoke Tests
 
 The repo mcporter config points at:

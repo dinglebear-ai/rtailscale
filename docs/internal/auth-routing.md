@@ -1,3 +1,9 @@
+---
+title: "Auth Routing Note"
+created: 2026-07-14
+updated: 2026-07-30
+---
+
 # Auth Routing Note
 
 `tailscale-rmcp` uses `lab-auth` for HTTP auth. The RMCP Streamable HTTP service

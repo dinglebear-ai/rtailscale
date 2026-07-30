@@ -1,10 +1,13 @@
 {
   "name": "tailscale",
-  "description": "Tailscale network management via MCP — query devices, ACL, DNS, users, and API keys from Claude",
+  "description": "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP.",
   "author": {
-    "name": "jmagar"
+    "name": "dinglebear.ai",
+    "email": "hello@dinglebear.ai",
+    "url": "https://dinglebear.ai"
   },
-  "repository": "https://github.com/jmagar/rtailscale",
+  "homepage": "https://rtailscale.dinglebear.ai",
+  "repository": "https://github.com/dinglebear-ai/rtailscale",
   "license": "MIT",
   "keywords": [
     "tailscale",

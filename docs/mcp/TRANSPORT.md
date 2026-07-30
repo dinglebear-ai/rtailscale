@@ -1,3 +1,9 @@
+---
+title: "MCP Transports"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # MCP Transports
 
 | Transport | Entry point | Use case |

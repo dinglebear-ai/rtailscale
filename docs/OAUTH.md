@@ -1,3 +1,9 @@
+---
+title: "OAuth Setup"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # OAuth Setup
 
 HTTP MCP can use Google OAuth through `lab-auth`. Use OAuth when the server is

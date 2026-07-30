@@ -1,3 +1,9 @@
+---
+title: "MCP Resources"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # MCP Resources
 
 The server advertises one resource:

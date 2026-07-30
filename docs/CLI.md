@@ -1,3 +1,9 @@
+---
+title: "Direct CLI Reference"
+created: 2026-05-13
+updated: 2026-07-30
+---
+
 # Direct CLI Reference
 
 The shipped binary is `rtailscale`. The npm package also exposes
