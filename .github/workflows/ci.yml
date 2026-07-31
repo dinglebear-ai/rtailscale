@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions: {}
+
+jobs:
+  rust:
+    permissions:
+      contents: read
+    uses: dinglebear-ai/workflows/.github/workflows/fast-rust.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
+    secrets: inherit
+
+  npm:
+    permissions:
+      contents: read
+    uses: dinglebear-ai/workflows/.github/workflows/fast-node.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
+    with:
+      working-directory: packages/tailscale-rmcp
+      enable-cache: false
+      install-command: "true"
+      audit-command: ""
+      lint-command: ""
+      typecheck-command: ""
+      test-command: npm test
+      contract-command: npm run check && npm pack --dry-run --json
+
+  workflow-policy:
+    permissions:
+      contents: read
+    uses: dinglebear-ai/workflows/.github/workflows/fleet-policy.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
+    secrets: inherit
+
+  repository-policy:
+    permissions:
+      contents: read
+    uses: dinglebear-ai/workflows/.github/workflows/repository-policy.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
+    secrets: inherit
+
+  fleet-contract:
+    permissions:
+      contents: read
+    uses: dinglebear-ai/workflows/.github/workflows/fleet-contract.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
+    with:
+      profile: rust
+      implementation-ref: d1a41a7af9c41189e0f1062234364f5814bda99d
+    secrets: inherit
+
+  ci:
+    name: CI
+    if: always()
+    needs: [rust, npm, workflow-policy, repository-policy, fleet-contract]
+    runs-on: ci-pool-ops
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Require all CI checks
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+
+          results = json.loads(os.environ["RESULTS"])
+          failed = {
+              name: job["result"]
+              for name, job in results.items()
+              if job["result"] != "success"
+          }
+          if failed:
+              print(f"CI checks did not succeed: {failed}", file=sys.stderr)
+              raise SystemExit(1)
+          PY

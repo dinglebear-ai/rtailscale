@@ -1,8 +1,9 @@
 name: release-please
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
   workflow_dispatch:
 
 concurrency:
@@ -15,6 +16,11 @@ permissions:
 
 jobs:
   release-please:
-    uses: dinglebear-ai/workflows/.github/workflows/release-please.yml@d7bbe71ddc1157e32ed0bebf928fc07438ba58b0
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.head_sha == github.sha)
+    uses: dinglebear-ai/workflows/.github/workflows/release-please.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
     secrets:
       RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
