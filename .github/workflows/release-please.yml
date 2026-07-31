@@ -15,6 +15,6 @@ permissions:
 
 jobs:
   release-please:
-    uses: dinglebear-ai/workflows/.github/workflows/release-please.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
+    uses: dinglebear-ai/workflows/.github/workflows/release-please.yml@66e64b9f31de7ac1f9aa8c9f87ede9bbec5eae1d
     secrets:
       RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
