@@ -50,7 +50,7 @@ jobs:
   build:
     name: Build hosted x86_64 release assets
     needs: [meta, preflight]
-    uses: dinglebear-ai/workflows/.github/workflows/hosted-rust-platform-release.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/hosted-rust-platform-release.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       checkout-ref: ${{ github.event.release.tag_name }}
       targets-json: >-
@@ -79,7 +79,7 @@ jobs:
   github-release:
     name: Attach verified release assets
     needs: [build]
-    uses: dinglebear-ai/workflows/.github/workflows/github-release.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/github-release.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       release-tag: ${{ github.event.release.tag_name }}
       artifact-pattern: rtailscale-*
@@ -87,7 +87,7 @@ jobs:
   npm:
     name: Publish npm launcher
     needs: [meta, github-release]
-    uses: dinglebear-ai/workflows/.github/workflows/npm-trusted-publish.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/npm-trusted-publish.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       checkout-ref: ${{ github.event.release.tag_name }}
       expected-version: ${{ needs.meta.outputs.version }}

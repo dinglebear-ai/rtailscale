@@ -17,7 +17,7 @@ concurrency:
 jobs:
   rust:
     name: Fast Rust
-    uses: dinglebear-ai/workflows/.github/workflows/fast-rust.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/fast-rust.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       toolchain: "1.97.1"
       test-command: cargo test --workspace --all-features --locked
@@ -29,21 +29,21 @@ jobs:
 
   msrv:
     name: MSRV
-    uses: dinglebear-ai/workflows/.github/workflows/rust-msrv.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/rust-msrv.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       msrv: "1.97.1"
 
   docs:
     name: Rust documentation
-    uses: dinglebear-ai/workflows/.github/workflows/rust-docs.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/rust-docs.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
 
   security:
     name: Cargo deny
-    uses: dinglebear-ai/workflows/.github/workflows/rust-security.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/rust-security.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
 
   npm:
     name: npm launcher
-    uses: dinglebear-ai/workflows/.github/workflows/fast-node.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/fast-node.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       working-directory: packages/tailscale-rmcp
       enable-cache: false
@@ -56,7 +56,7 @@ jobs:
 
   operations:
     name: Workflow, TOML, and shell policy
-    uses: dinglebear-ai/workflows/.github/workflows/fast-ops.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/fast-ops.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       shell-globs: >-
         install.sh entrypoint.sh scripts/install.sh scripts/check-*.sh
@@ -77,20 +77,20 @@ jobs:
 
   install-contract:
     name: Installer contract
-    uses: dinglebear-ai/workflows/.github/workflows/install-contract.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/install-contract.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
       contract-command: bash scripts/check-version-sync.sh && bash scripts/validate-plugin-layout.sh
 
   repository-contract:
     name: Fleet repository contract
-    uses: dinglebear-ai/workflows/.github/workflows/fleet-contract.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/fleet-contract.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
     with:
-      implementation-ref: eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+      implementation-ref: 542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
       profile: rust
 
   workflow-policy:
     name: Fleet workflow policy
-    uses: dinglebear-ai/workflows/.github/workflows/fleet-policy.yml@eb5f36cf517ffc949aca1c81e2ccbc71b5a85267
+    uses: dinglebear-ai/workflows/.github/workflows/fleet-policy.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
 
   ci-gate:
     name: CI gate
