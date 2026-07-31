@@ -40,6 +40,8 @@ jobs:
   security:
     name: Cargo deny
     uses: dinglebear-ai/workflows/.github/workflows/rust-security.yml@542ea7b7e5ca2d4e21f3277bfcf158584fee90ec
+    with:
+      cargo-deny-version: "0.20.2"
 
   npm:
     name: npm launcher
