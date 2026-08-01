@@ -1,4 +1,4 @@
-use rmcp::model::{Icon, IconTheme, Meta};
+use rmcp::model::{Icon, IconTheme, MetaObject};
 use serde_json::{Map, Value, json};
 
 pub(super) const META_NAMESPACE: &str = "ai.dinglebear/tailscale-rmcp";
@@ -22,8 +22,8 @@ pub(super) fn icons_json() -> Vec<Value> {
     })]
 }
 
-pub(super) fn meta(surface: &str, detail: Value) -> Meta {
-    Meta(meta_object(surface, detail))
+pub(super) fn meta(surface: &str, detail: Value) -> MetaObject {
+    MetaObject(meta_object(surface, detail))
 }
 
 pub(super) fn meta_json(surface: &str, detail: Value) -> Value {
