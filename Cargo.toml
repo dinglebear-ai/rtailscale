@@ -15,7 +15,7 @@ description = "MCP server and CLI for Tailscale: inspect and manage tailnet devi
 
 [workspace.dependencies]
 anyhow = "1"
-rmcp = { version = "=3.0.0-beta.2", default-features = false }
+rmcp = { version = "=3.1.0", default-features = false }
 
 [workspace.lints.clippy]
 missing_safety_doc = "deny"

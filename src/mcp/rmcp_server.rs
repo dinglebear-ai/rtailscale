@@ -6,7 +6,7 @@ use rmcp::{
     model::{
         CallToolRequestParams, CallToolResponse, CallToolResult, ContentBlock,
         GetPromptRequestParams, GetPromptResponse, Implementation, ListPromptsResult,
-        ListResourcesResult, ListToolsResult, Meta, PaginatedRequestParams,
+        ListResourcesResult, ListToolsResult, MetaObject, PaginatedRequestParams,
         ReadResourceRequestParams, ReadResourceResponse, ReadResourceResult, Resource,
         ResourceContents, ServerCapabilities, ServerInfo, Tool, ToolAnnotations,
     },
@@ -255,7 +255,7 @@ fn schema_resource() -> Resource {
     resource
 }
 
-fn resource_meta() -> Meta {
+fn resource_meta() -> MetaObject {
     metadata::meta(
         "resource",
         json!({
@@ -267,7 +267,7 @@ fn resource_meta() -> Meta {
     )
 }
 
-fn resource_content_meta() -> Meta {
+fn resource_content_meta() -> MetaObject {
     metadata::meta(
         "resourceContent",
         json!({
@@ -343,7 +343,7 @@ fn rmcp_tool_from_json(value: Value) -> Result<Tool, ErrorData> {
         .get("_meta")
         .and_then(Value::as_object)
         .cloned()
-        .map(Meta);
+        .map(MetaObject);
     Ok(tool)
 }
 
