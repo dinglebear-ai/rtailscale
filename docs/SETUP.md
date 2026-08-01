@@ -37,8 +37,8 @@ tailnets usually use the org domain.
 ## 3. Run the CLI
 
 ```bash
-npx -y @dinglebear/rtailscale-mcp devices --json
-npx -y @dinglebear/rtailscale-mcp users --json
+npx -y @dinglebear/rtailscale devices --json
+npx -y @dinglebear/rtailscale users --json
 ```
 
 The npm package launches the Rust binary `rtailscale`.
@@ -48,7 +48,7 @@ The npm package launches the Rust binary `rtailscale`.
 Use stdio for local child-process MCP clients:
 
 ```bash
-npx -y @dinglebear/rtailscale-mcp mcp
+npx -y @dinglebear/rtailscale mcp
 ```
 
 Claude Code example:
@@ -73,7 +73,7 @@ Claude Code example:
 Loopback development:
 
 ```bash
-TAILSCALE_MCP_HOST=127.0.0.1 npx -y @dinglebear/rtailscale-mcp serve
+TAILSCALE_MCP_HOST=127.0.0.1 npx -y @dinglebear/rtailscale serve
 curl -sf http://127.0.0.1:40040/health
 ```
 

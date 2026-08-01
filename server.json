@@ -38,7 +38,7 @@
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
-      "identifier": "@dinglebear/rtailscale-mcp",
+      "identifier": "@dinglebear/rtailscale",
       "version": "0.1.4",
       "runtimeHint": "npx",
       "packageArguments": [
@@ -104,8 +104,8 @@
       "namespace": "ai.dinglebear",
       "dnsDomain": "dinglebear.ai",
       "distribution": {
-        "npm": "@dinglebear/rtailscale-mcp@0.1.4",
-        "nodePackage": "@dinglebear/rtailscale-mcp"
+        "npm": "@dinglebear/rtailscale@0.1.4",
+        "nodePackage": "@dinglebear/rtailscale"
       },
       "buildInfo": {
         "version": "0.1.4",

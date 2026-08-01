@@ -11,7 +11,7 @@ const packageRoot = path.resolve(__dirname, "..");
 const repoRoot = path.resolve(packageRoot, "..", "..");
 const packageJsonPath = path.join(packageRoot, "package.json");
 const packageJson = readJson(packageJsonPath);
-const expectedPackageName = "@dinglebear/rtailscale-mcp";
+const expectedPackageName = "@dinglebear/rtailscale";
 const releaseMode = process.argv.includes("--release");
 const skipReleaseAssets = process.argv.includes("--skip-release-assets");
 

@@ -63,8 +63,8 @@
   ],
   "packages": {
     ".": {
-      "package-name": "@dinglebear/rtailscale-mcp",
-      "component": "@dinglebear/rtailscale-mcp",
+      "package-name": "@dinglebear/rtailscale",
+      "component": "@dinglebear/rtailscale",
       "changelog-path": "CHANGELOG.md",
       "extra-files": [
         "packages/tailscale-rmcp/package.json",
@@ -81,7 +81,7 @@
         {
           "type": "json",
           "path": "server.json",
-          "jsonpath": "$.packages[?(@.identifier == '@dinglebear/rtailscale-mcp')].version"
+          "jsonpath": "$.packages[?(@.identifier == '@dinglebear/rtailscale')].version"
         },
         {
           "type": "json",
@@ -96,7 +96,7 @@
         {
           "type": "json",
           "path": "server.json",
-          "jsonpath": "$.packages[?(@.identifier == '@dinglebear/rtailscale-mcp')].environmentVariables[?(@.name == 'TAILSCALE_RMCP_VERSION')].placeholder"
+          "jsonpath": "$.packages[?(@.identifier == '@dinglebear/rtailscale')].environmentVariables[?(@.name == 'TAILSCALE_RMCP_VERSION')].placeholder"
         }
       ]
     }
