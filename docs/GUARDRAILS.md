@@ -73,7 +73,7 @@ The server advertises:
 - one tool named `tailscale`
 - tool `outputSchema`
 - tool `execution.taskSupport = forbidden`
-- tool, resource, and prompt `_meta` under `ai.dinglebear/tailscale-rmcp`
+- tool, resource, and prompt `_meta` under `ai.dinglebear/rtailscale`
 - resource and prompt decorative icons
 
 Metadata is descriptive. Authorization and destructive gates remain enforced in

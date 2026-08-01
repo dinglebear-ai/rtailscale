@@ -1,5 +1,5 @@
 {
-  "name": "tailscale-rmcp",
+  "name": "@dinglebear/rtailscale-mcp",
   "version": "0.1.4",
   "description": "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP.",
   "license": "MIT",
@@ -54,10 +54,13 @@
     "oauth",
     "http-server"
   ],
-  "mcpName": "ai.dinglebear/tailscale-rmcp",
+  "mcpName": "ai.dinglebear/rtailscale",
   "binaryVersion": "0.1.4",
   "author": {
     "name": "dinglebear.ai",
     "url": "https://dinglebear.ai"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

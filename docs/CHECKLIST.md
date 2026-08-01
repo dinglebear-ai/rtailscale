@@ -30,8 +30,8 @@ Version surfaces that must agree:
 
 Metadata surfaces to verify:
 
-- `server.json.name = ai.dinglebear/tailscale-rmcp`
-- npm `mcpName = ai.dinglebear/tailscale-rmcp`
+- `server.json.name = ai.dinglebear/rtailscale`
+- npm `mcpName = ai.dinglebear/rtailscale`
 - `serverInfo.name = tailscale-rmcp`
 - `serverInfo.title = Tailscale RMCP`
 - remote endpoint `https://ts.tootie.tv/mcp`

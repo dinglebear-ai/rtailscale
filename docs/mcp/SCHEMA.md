@@ -59,7 +59,7 @@ Advertised metadata includes:
 - output schema for `{ ok, data, error }`
 - `execution.taskSupport = forbidden`
 - decorative icons
-- `_meta.ai.dinglebear/tailscale-rmcp`
+- `_meta.ai.dinglebear/rtailscale`
 
 The live schema is available as the MCP resource
 `tailscale://schema/mcp-tool`.
