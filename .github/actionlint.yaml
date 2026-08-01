@@ -1,8 +1,17 @@
 self-hosted-runner:
   labels:
-    - rmcp-template
-    - tootie
-    - unraid
-    - dookie
+    - ci-pool-rust
+    - ci-pool-python
+    - ci-pool-typescript
+    - ci-pool-go
+    - ci-pool-ops
+    - ci-pool-jvm
+    - ci-pool-system
+    - ci-pool-residential-egress
+    - residential-egress
+    - ci-cap-zfs
+    - ci-cap-docker
+    - ci-cap-kvm
+    - ci-cap-gpu
 
 config-variables: null
