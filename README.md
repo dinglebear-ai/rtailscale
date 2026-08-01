@@ -9,8 +9,8 @@ users, authorize devices, and delete devices when the destructive gate is
 explicitly enabled.
 
 **30-second path:** set `TAILSCALE_API_KEY`, then run
-`npx -y tailscale-rmcp devices --json` -> start loopback HTTP with
-`TAILSCALE_MCP_HOST=127.0.0.1 npx -y tailscale-rmcp serve` -> call `tools/call`
+`npx -y @dinglebear/rtailscale devices --json` -> start loopback HTTP with
+`TAILSCALE_MCP_HOST=127.0.0.1 npx -y @dinglebear/rtailscale serve` -> call `tools/call`
 with `{"action":"devices"}`.
 
 **Status:** operational RMCP upstream-client server. Write-capable for device
@@ -53,7 +53,7 @@ API keys through MCP tool arguments.
 | Repository | `tailscale-rmcp` |
 | Rust crate | `tailscale-rmcp` |
 | Binary / CLI | `rtailscale` |
-| npm package | `tailscale-rmcp` |
+| npm package | `@dinglebear/rtailscale` |
 | npm binary aliases | `tailscale-rmcp`, `rtailscale` |
 | MCP tool | `tailscale` |
 | Config home | `~/.tailscale-mcp` on hosts, `/data` in containers |
@@ -81,7 +81,7 @@ The repo, crate, and npm package use the RMCP family name. The shipped binary is
 
 | Path | Command | Best for | Notes |
 |---|---|---|---|
-| npm / npx | `npx -y tailscale-rmcp --help` | Local MCP clients and quick trials. | Downloads the matching `rtailscale` binary from GitHub Releases. |
+| npm / npx | `npx -y @dinglebear/rtailscale --help` | Local MCP clients and quick trials. | Downloads the matching `rtailscale` binary from GitHub Releases. |
 | Release installer | `curl -fsSL https://raw.githubusercontent.com/dinglebear-ai/rtailscale/main/scripts/install.sh \| bash` | Host installs without Node. | Installs `rtailscale` for the current Linux host. |
 | Docker / Compose | `docker compose up -d` | Shared HTTP MCP deployments. | Reads `.env` and exposes container port `40040`. |
 | Build from source | `cargo build --release` | Development and audits. | Produces `target/release/rtailscale`. |
@@ -92,9 +92,9 @@ The repo, crate, and npm package use the RMCP family name. The shipped binary is
 Run the stdio MCP server or CLI without a manual binary install:
 
 ```bash
-npx -y tailscale-rmcp --help
-npx -y tailscale-rmcp mcp
-npx -y tailscale-rmcp devices --json
+npx -y @dinglebear/rtailscale --help
+npx -y @dinglebear/rtailscale mcp
+npx -y @dinglebear/rtailscale devices --json
 ```
 
 The npm package downloads `rtailscale` during `postinstall`. Override download
@@ -139,13 +139,13 @@ default personal tailnet; organization tailnets usually use the org domain.
 ### 3. Run A Safe CLI Call
 
 ```bash
-npx -y tailscale-rmcp devices --json
+npx -y @dinglebear/rtailscale devices --json
 ```
 
 ### 4. Start Loopback HTTP MCP
 
 ```bash
-TAILSCALE_MCP_HOST=127.0.0.1 npx -y tailscale-rmcp serve
+TAILSCALE_MCP_HOST=127.0.0.1 npx -y @dinglebear/rtailscale serve
 ```
 
 In another shell:
@@ -231,7 +231,7 @@ as action arguments.
 
 | Surface | Status | Entry point | Purpose |
 |---|---:|---|---|
-| MCP stdio | Supported | `rtailscale mcp`, `npx -y tailscale-rmcp mcp` | Local child-process MCP clients. |
+| MCP stdio | Supported | `rtailscale mcp`, `npx -y @dinglebear/rtailscale mcp` | Local child-process MCP clients. |
 | MCP HTTP | Supported | `rtailscale serve`, `POST /mcp` | Streamable HTTP MCP for local or shared server deployments. |
 | CLI | Supported | `rtailscale <command>` | Scriptable parity and debugging. |
 | REST API | Not shipped | N/A | Tailscale already owns the REST API. |
@@ -369,12 +369,12 @@ CLI shim         (src/cli.rs)        argv -> service -> stdout
   `.release-please-manifest.json`, and `server.json` must agree on the released
   version.
 - GitHub Releases publish the `rtailscale` binary consumed by the npm launcher.
-- The npm package name is `tailscale-rmcp`; binary aliases are
+- The npm package name is `@dinglebear/rtailscale`; binary aliases are
   `tailscale-rmcp` and `rtailscale`.
 - Docker/OCI metadata uses `ghcr.io/dinglebear-ai/rtailscale:<version>` (see
   `docker-compose.prod.yml`). The image path still uses the pre-transfer owner
   namespace even though the repo now lives at `dinglebear-ai/rtailscale`.
-- `plugins/tailscale/.mcp.json` must launch `npx -y tailscale-rmcp mcp` so
+- `plugins/tailscale/.mcp.json` must launch `npx -y @dinglebear/rtailscale mcp` so
   stdio clients start the MCP transport rather than the HTTP server.
 - `plugins/tailscale/` ships no Claude Code hooks; `scripts/validate-plugin-layout.sh`
   fails if a `hooks/` directory reappears.

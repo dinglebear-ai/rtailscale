@@ -20,6 +20,6 @@ Resource metadata includes:
 - MIME type: `application/json`
 - size when serializable
 - decorative icon
-- `_meta.ai.dinglebear/tailscale-rmcp`
+- `_meta.ai.dinglebear/rtailscale`
 
 Use `resources/list` to discover it and `resources/read` to fetch it.

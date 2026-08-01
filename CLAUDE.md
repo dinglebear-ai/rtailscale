@@ -34,7 +34,7 @@
 | `src/mcp/rmcp_server.rs` | RMCP `ServerHandler`: tools, resources, prompts |
 | `src/mcp/routes.rs` | Axum router: `/mcp`, `/health`, OAuth discovery routes |
 | `src/mcp/prompts.rs` | MCP prompts — one prompt, `network_status` |
-| `src/mcp/metadata.rs` | Tool icons and `_meta` under namespace `ai.dinglebear/tailscale-rmcp` |
+| `src/mcp/metadata.rs` | Tool icons and `_meta` under namespace `ai.dinglebear/rtailscale` |
 | `src/mcp.rs` | `AppState`, `AuthPolicy`, `build_auth_layer`, and the feature-gated `testing` module |
 | `src/config.rs` | `Config`, `TailscaleConfig`, `McpConfig`, `AuthConfig`; `config.toml` then env overrides |
 | `src/cli.rs` | CLI arg parsing and dispatch (thin shim over `TailscaleService`), `load_dotenv`, `run_doctor` |

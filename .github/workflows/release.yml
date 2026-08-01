@@ -68,7 +68,7 @@ jobs:
   npm:
     name: Publish npm launcher
     needs: [meta, github-release]
-    uses: dinglebear-ai/workflows/.github/workflows/npm-trusted-publish.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
+    uses: dinglebear-ai/workflows/.github/workflows/npm-trusted-publish.yml@a5937b60b317abed7e757737d95ad003fac2bfb0
     with:
       checkout-ref: ${{ github.event.release.tag_name }}
       expected-version: ${{ needs.meta.outputs.version }}
@@ -76,3 +76,5 @@ jobs:
       enable-cache: false
       install-command: "true"
       verify-command: npm test && npm run check && npm pack --dry-run --json
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

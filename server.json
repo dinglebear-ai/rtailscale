@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "ai.dinglebear/tailscale-rmcp",
+  "name": "ai.dinglebear/rtailscale",
   "title": "Tailscale RMCP",
   "description": "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP.",
   "version": "0.1.4",
@@ -38,7 +38,7 @@
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
-      "identifier": "tailscale-rmcp",
+      "identifier": "@dinglebear/rtailscale",
       "version": "0.1.4",
       "runtimeHint": "npx",
       "packageArguments": [
@@ -104,8 +104,8 @@
       "namespace": "ai.dinglebear",
       "dnsDomain": "dinglebear.ai",
       "distribution": {
-        "npm": "tailscale-rmcp@0.1.4",
-        "nodePackage": "tailscale-rmcp"
+        "npm": "@dinglebear/rtailscale@0.1.4",
+        "nodePackage": "@dinglebear/rtailscale"
       },
       "buildInfo": {
         "version": "0.1.4",
