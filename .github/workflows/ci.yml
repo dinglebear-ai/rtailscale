@@ -17,7 +17,7 @@ jobs:
   rust:
     permissions:
       contents: read
-    uses: dinglebear-ai/workflows/.github/workflows/fast-rust.yml@d1a41a7af9c41189e0f1062234364f5814bda99d
+    uses: dinglebear-ai/workflows/.github/workflows/fast-rust.yml@ac57c3208cf92d71c5971bb936df51c400cb1ccf
     secrets: inherit
 
   npm:
