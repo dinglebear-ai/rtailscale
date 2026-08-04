@@ -1,7 +1,6 @@
 # tailscale-rmcp
 
-MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes,
-users, keys, DNS, and ACL policy over stdio or streamable HTTP.
+Tailscale device, route, DNS, key, user, and ACL management over MCP and CLI.
 
 It exposes one MCP tool, `tailscale`, plus the `rtailscale` CLI. Agents can
 list devices, inspect routes, read API keys, ACL policy, DNS settings, and
