@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+* **ci:** pin the shared Rust cache action to upstream Kache 0.13.0 so hosted and self-hosted jobs use the same daemon protocol and S3 cache epoch
+
 ## [0.1.4](https://github.com/dinglebear-ai/rtailscale/compare/v0.1.3...v0.1.4) (2026-07-28)
 
 
