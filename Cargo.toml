@@ -11,7 +11,7 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://rtailscale.dinglebear.ai"
 repository = "https://github.com/dinglebear-ai/rtailscale"
-description = "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP."
+description = "Tailscale device, route, DNS, key, user, and ACL management over MCP and CLI."
 
 [workspace.dependencies]
 anyhow = "1"
