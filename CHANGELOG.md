@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * **ci:** pin the shared Rust cache action to upstream Kache 0.13.0 so hosted and self-hosted jobs use the same daemon protocol and S3 cache epoch
-- Bind the production MCP port only to DOOKIE's Tailscale and LAN addresses instead of every host interface.
+- Bind the production MCP port only to DEVHOST's Tailscale and LAN addresses instead of every host interface.
 ## [0.1.4](https://github.com/dinglebear-ai/rtailscale/compare/v0.1.3...v0.1.4) (2026-07-28)
 
 
