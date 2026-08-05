@@ -31,7 +31,7 @@ jobs:
   build:
     name: Build hosted x86_64 release assets
     needs: [meta]
-    uses: dinglebear-ai/workflows/.github/workflows/hosted-rust-platform-release.yml@78da20a9239e0abaf6ccd530427db3fe4266d264
+    uses: dinglebear-ai/workflows/.github/workflows/hosted-rust-platform-release.yml@48d4a81735121461c29bb9f05f5607214e1c821e
     secrets: inherit
     with:
       checkout-ref: ${{ github.event.release.tag_name }}
