@@ -22,6 +22,6 @@ updated: 2026-07-30
 | `packages/tailscale-rmcp/` | npm launcher package. |
 | `plugins/tailscale/` | Claude/Codex plugin bundle. |
 | `server.json` | MCP Registry server manifest. |
-| `config/mcporter.json` | Live mcporter config for `https://ts.tootie.tv/mcp`. |
+| `config/mcporter.json` | Live mcporter config for `https://ts.example.internal/mcp`. |
 | `tests/` | Unit and integration smoke tests. |
 | `docs/references/` | Generated upstream reference snapshots. |

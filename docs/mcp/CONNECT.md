@@ -51,7 +51,7 @@ Client:
   "mcpServers": {
     "tailscale": {
       "type": "http",
-      "url": "https://ts.tootie.tv/mcp",
+      "url": "https://ts.example.internal/mcp",
       "headers": {
         "Authorization": "Bearer ${TAILSCALE_MCP_TOKEN}"
       }
@@ -63,7 +63,7 @@ Client:
 ## Raw JSON-RPC smoke
 
 ```bash
-curl -s https://ts.tootie.tv/mcp \
+curl -s https://ts.example.internal/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "Authorization: Bearer $TAILSCALE_MCP_TOKEN" \
