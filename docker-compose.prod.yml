@@ -28,8 +28,8 @@ services:
       - path: .env
         required: false
     ports:
-      - "100.88.16.79:${TAILSCALE_MCP_PORT:-40040}:40040/tcp"
-      - "10.1.0.6:${TAILSCALE_MCP_PORT:-40040}:40040/tcp"
+      - "198.51.100.1:${TAILSCALE_MCP_PORT:-40040}:40040/tcp"
+      - "192.0.2.6:${TAILSCALE_MCP_PORT:-40040}:40040/tcp"
     volumes:
       - ${HOME}/.tailscale-mcp:/data
     healthcheck:
