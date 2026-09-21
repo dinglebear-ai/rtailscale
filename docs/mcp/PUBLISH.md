@@ -14,7 +14,7 @@ Registry and package metadata must agree:
 | npm `mcpName` | `ai.dinglebear/rtailscale` |
 | package name | `tailscale-rmcp` |
 | binary alias | `rtailscale` |
-| remote URL | `https://ts.tootie.tv/mcp` |
+| remote URL | `https://ts.example.internal/mcp` |
 
 Validate:
 
