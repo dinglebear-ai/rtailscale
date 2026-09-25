@@ -1,6 +1,7 @@
 # tailscale-rmcp
 
-Tailscale device, route, DNS, key, user, and ACL management over MCP and CLI.
+MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes,
+users, keys, DNS, and ACL policy over stdio or streamable HTTP.
 
 It exposes one MCP tool, `tailscale`, plus the `rtailscale` CLI. Agents can
 list devices, inspect routes, read API keys, ACL policy, DNS settings, and
@@ -474,4 +475,4 @@ authenticated gateway.
 
 ## License
 
-Original Dinglebear-authored portions of this project are licensed under [AGPL-3.0-only](LICENSE). Separate commercial licensing is available for organizations that need terms outside the AGPL. Third-party material remains under its original license. See [LICENSING.md](https://github.com/dinglebear-ai/rtailscale/blob/main/LICENSING.md).
+MIT. See [LICENSE](LICENSE).

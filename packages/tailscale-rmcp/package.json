@@ -1,8 +1,8 @@
 {
   "name": "@dinglebear/rtailscale",
   "version": "0.1.4",
-  "license": "AGPL-3.0-only",
-  "description": "Tailscale device, route, DNS, key, user, and ACL management over MCP and CLI.",
+  "description": "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP.",
+  "license": "MIT",
   "homepage": "https://rtailscale.dinglebear.ai",
   "repository": {
     "type": "git",

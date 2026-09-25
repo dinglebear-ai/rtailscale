@@ -29,7 +29,6 @@ for file in "${claude_manifest}" "${codex_manifest}"; do
 done
 
 jq -er '.mcpServers | type == "object" and length > 0' "${mcp_json}" >/dev/null
-jq -er '.mcpServers.tailscale.command == "npx" and .mcpServers.tailscale.args == ["-y", "@dinglebear/rtailscale", "mcp"]' "${mcp_json}" >/dev/null
 
 # Claude Code plugin hooks are intentionally not shipped. Setup remains available
 # as an explicit CLI command (`rtailscale setup check|repair|plugin-hook`).

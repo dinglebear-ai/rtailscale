@@ -7,11 +7,11 @@ version = "0.1.4"
 edition = "2024"
 rust-version = "1.97.1"
 authors = ["dinglebear.ai <hello@dinglebear.ai>"]
-license = "AGPL-3.0-only"
+license = "MIT"
 readme = "README.md"
 homepage = "https://rtailscale.dinglebear.ai"
 repository = "https://github.com/dinglebear-ai/rtailscale"
-description = "Tailscale device, route, DNS, key, user, and ACL management over MCP and CLI."
+description = "MCP server and CLI for Tailscale: inspect and manage tailnet devices, routes, users, keys, DNS, and ACL policy over stdio or streamable HTTP."
 
 [workspace.dependencies]
 anyhow = "1"
