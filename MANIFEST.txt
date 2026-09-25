@@ -1,0 +1,18 @@
+Workspace cleanup archive for dinglebear-ai/rtailscale
+Date: 2026-09-25
+Default: main
+
+STALE_BRANCHES 3
+STALE	chore/rmcp3-edition2024	bbfcdbb617b2a1a1d71f6a19de9fe4461d832a15
+STALE	codex/scoped-npm-package	45b6b5270340d67c421b7ed505bd4981d71fdcf2
+STALE	codex/workflow-alignment-full-20260730	26e252d64ffe7ac570481c2a2cc57e3500cf1d5f
+
+LOCAL_ONLY_BRANCHES 4
+LOCAL_ONLY	chore/kache-0.15.1	fa3c636cb372ab456f2e8a3e9bab80f4f7743243
+LOCAL_ONLY	chore/scrub-internal-identifiers-20260805	284be44ee322ff0c0ab75f482e4e90eb7dfbb73a
+LOCAL_ONLY	codex/scoped-npm-package	45b6b5270340d67c421b7ed505bd4981d71fdcf2
+LOCAL_ONLY	main	fa3c636cb372ab456f2e8a3e9bab80f4f7743243
+
+STALE_WORKTREES 0
+
+WIP_SNAPSHOTS 0
