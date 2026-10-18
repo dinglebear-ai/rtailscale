@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "tailscale-rmcp": {
-      "baseUrl": "https://ts.tootie.tv/mcp",
+      "baseUrl": "https://ts.example.internal/mcp",
       "headers": {
         "Authorization": "Bearer ${TAILSCALE_MCP_TOKEN}"
       }

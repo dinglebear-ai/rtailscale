@@ -9,7 +9,7 @@ updated: 2026-07-30
 The repo mcporter config points at:
 
 ```text
-https://ts.tootie.tv/mcp
+https://ts.example.internal/mcp
 ```
 
 List tools:

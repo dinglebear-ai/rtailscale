@@ -34,7 +34,7 @@ Metadata surfaces to verify:
 - npm `mcpName = ai.dinglebear/rtailscale`
 - `serverInfo.name = tailscale-rmcp`
 - `serverInfo.title = Tailscale RMCP`
-- remote endpoint `https://ts.tootie.tv/mcp`
+- remote endpoint `https://ts.example.internal/mcp`
 - tool/resource/prompt icons and `_meta`
 - tool output schema `{ ok, data, error }`
 

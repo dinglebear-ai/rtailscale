@@ -28,7 +28,7 @@ cargo test --locked advertised_surfaces_include_icons_meta_and_execution_metadat
 Live HTTP checks:
 
 ```bash
-curl -sf https://ts.tootie.tv/health
+curl -sf https://ts.example.internal/health
 mcporter tools --config config/mcporter.json tailscale-rmcp
 mcporter call --config config/mcporter.json tailscale-rmcp.tailscale action=devices
 ```
